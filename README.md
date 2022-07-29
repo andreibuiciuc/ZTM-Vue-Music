@@ -1,4 +1,4 @@
-# music
+# ZTM-Vue-Music - Master project from the Complete Vue Mastery 2022 Course from Zero To Mastery
 
 ## Project setup
 ```
