@@ -15,7 +15,9 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'comma-dangle': 'off',
     'vuejs-accessibility/label-has-for': 'off',
-    'vuejs-accessibility/click-events-have-key-events': 'off'
+    'vuejs-accessibility/click-events-have-key-events': 'off',
+    'no-trailing-spaces': 'off',
+    'object-curly-newline': 'off'
   },
   overrides: [
     {
