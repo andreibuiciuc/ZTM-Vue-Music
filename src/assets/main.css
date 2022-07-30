@@ -2,7 +2,6 @@ a {
   transition: all 0.15s ease;
 }
 
-/* text-yellow-500 */
 a:hover {
   color: #F59E0B;
   text-decoration: none;
@@ -69,7 +68,6 @@ input[type="file"]{
 .music-bg {
   animation: slide 50s linear infinite;
   will-change: background-position;
-  /* background-image: url(/assets/theme/img/song-header.png); */
 }
 
 @keyframes progress-bar-stripes {
