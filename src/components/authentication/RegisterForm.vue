@@ -85,6 +85,7 @@
 
 <script>
 import CONSTANTS from '@/constants/constants';
+import { firebaseEmailAndPasswordAuth, firebaseAddUserToCollection } from '@/includes/firebase/requests';
 import AuthenticationAlert from './AuthenticationAlert.vue';
 
 export default {
@@ -113,16 +114,45 @@ export default {
     };
   },
   methods: {
-    register(values) {
+    async register(values) {
       this.registrationInSubmission = true;
       this.showRegisterAlert = true;
       this.registrationAlertVariant = CONSTANTS.COLOR_VARIANTS.BLUE;
       this.registrationAlertMessage = CONSTANTS.ALERT_MESSAGES.REGISTER_WAIT;
 
+      // Authenticate the user via Firebase 
+      const userCredentials = await this.createUser(values.email, values.password);      
+      if (userCredentials === null) {
+        this.handleErrorResponse();
+      }
+
+      // Create and save the user document in the firestore database
+      const userDocument = await this.addUser({
+        name: values.name,
+        email: values.email,
+        age: values.age,
+        country: values.country 
+      });
+      if (userDocument === null) {
+        this.handleErrorResponse();
+      }
+
+      this.handleSuccessResponse();
+    },
+    createUser(email, password) {
+      return firebaseEmailAndPasswordAuth(email, password);
+    },
+    addUser(user) {
+      return firebaseAddUserToCollection(user);
+    },
+    handleErrorResponse() {
+      this.registrationInSubmission = false;
+      this.registrationAlertVariant = CONSTANTS.COLOR_VARIANTS.RED;
+      this.registrationAlertMessage = CONSTANTS.ALERT_MESSAGES.ERROR;
+    },
+    handleSuccessResponse() {
       this.registrationAlertVariant = CONSTANTS.COLOR_VARIANTS.GREEN;
       this.registrationAlertMessage = CONSTANTS.ALERT_MESSAGES.REGISTER_SUCCESS;
-
-      console.log(values);
     }
   }
 };  
