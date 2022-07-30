@@ -17,7 +17,8 @@ module.exports = {
     'vuejs-accessibility/label-has-for': 'off',
     'vuejs-accessibility/click-events-have-key-events': 'off',
     'no-trailing-spaces': 'off',
-    'object-curly-newline': 'off'
+    'object-curly-newline': 'off',
+    'max-len': 'off'
   },
   overrides: [
     {
