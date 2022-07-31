@@ -4,7 +4,8 @@ export default {
     REGISTER_SUCCESS: 'Success! Your account has been created.',
     LOGIN_WAIT: 'Please wait! We are loggin you in.',
     LOGIN_SUCCESS: 'Success! You are now logged in.',
-    ERROR: 'An unexpected error occurred. Please try again later.'
+    LOGIN_ERROR: 'Invalid login details',
+    ERROR: 'An unexpected error occurred. Please try again later.',
   },
   COLOR_VARIANTS: {
     BLUE: 'bg-blue-500',

@@ -1,5 +1,5 @@
 <template>
-    <authentication-alert v-if="showRegisterAlert" 
+    <authentication-alert v-if="showRegistrationAlert" 
         :message="registrationAlertMessage"
         :variant="registrationAlertVariant"/>
 
@@ -109,7 +109,7 @@ export default {
         country: 'USA'
       },
       registrationInSubmission: false,
-      showRegisterAlert: false,
+      showRegistrationAlert: false,
       registrationAlertMessage: CONSTANTS.ALERT_MESSAGES.REGISTER_WAIT,
       registrationAlertVariant: CONSTANTS.COLOR_VARIANTS.BLUE
     };
@@ -128,6 +128,8 @@ export default {
       }
 
       this.handleSuccessAlertState();
+
+      window.location.reload();
     },
     handleWaitAlertState() {
       this.registrationInSubmission = true;

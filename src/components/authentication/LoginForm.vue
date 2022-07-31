@@ -32,6 +32,9 @@
 </template>
 
 <script>
+import { mapActions } from 'pinia';
+import useUserStore from '@/store/user';
+
 import CONSTANTS from '@/constants/constants';
 import AuthenticationAlert from './AuthenticationAlert.vue';
 
@@ -49,21 +52,32 @@ export default {
       loginInSubmission: false,
       showLoginAlert: false,
       loginAlertMessage: CONSTANTS.ALERT_MESSAGES.LOGIN_WAIT,
-      loginAlertVaiant: CONSTANTS.COLOR_VARIANTS.BLUE
+      loginAlertVariant: CONSTANTS.COLOR_VARIANTS.BLUE
     };
   },
   methods: {
-    login(values) {
+    ...mapActions(useUserStore, {
+      authenticate: 'login'
+    }),
+    async login(values) {
       this.loginInSubmission = true;
       this.showLoginAlert = true;
 
       this.loginAlertVariant = CONSTANTS.COLOR_VARIANTS.BLUE;
       this.loginAlertMessage = CONSTANTS.ALERT_MESSAGES.LOGIN_WAIT;
 
+      try {
+        await this.authenticate(values);
+      } catch (error) {
+        this.loginAlertVariant = CONSTANTS.COLOR_VARIANTS.RED;
+        this.loginAlertMessage = CONSTANTS.ALERT_MESSAGES.LOGIN_ERROR;
+        return;
+      }
+
       this.loginAlertVariant = CONSTANTS.COLOR_VARIANTS.GREEN;
       this.loginAlertMessage = CONSTANTS.ALERT_MESSAGES.LOGIN_SUCCESS;
 
-      console.log(values);
+      window.location.reload();
     }
   },
 };
