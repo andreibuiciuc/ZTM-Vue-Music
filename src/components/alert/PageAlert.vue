@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'AuthenticationAlert',
+  name: 'PageAlert',
   props: {
     message: String,
     variant: String

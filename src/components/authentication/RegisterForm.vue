@@ -1,8 +1,6 @@
 <template>
-    <authentication-alert v-if="showRegistrationAlert" 
-        :message="registrationAlertMessage"
-        :variant="registrationAlertVariant"/>
-
+    <page-alert v-if="showRegistrationAlert" 
+      :message="registrationAlertMessage" :variant="registrationAlertVariant"/>
     <vee-form :validation-schema="registerSchema" :initial-values="userData" @submit="register">
         <!-- Name -->
         <div class="mb-3">
@@ -84,15 +82,15 @@
 </template>
 
 <script>
-import CONSTANTS from '@/constants/constants';
+import constants from '@/constants/constants';
 import useUserStore from '@/store/user';
 import { mapActions } from 'pinia';
-import AuthenticationAlert from './AuthenticationAlert.vue';
+import PageAlert from '@/components/alert/PageAlert.vue';
 
 export default {
   name: 'RegisterForm',
   components: {
-    AuthenticationAlert
+    PageAlert
   },
   data() {
     return {
@@ -110,8 +108,8 @@ export default {
       },
       registrationInSubmission: false,
       showRegistrationAlert: false,
-      registrationAlertMessage: CONSTANTS.ALERT_MESSAGES.REGISTER_WAIT,
-      registrationAlertVariant: CONSTANTS.COLOR_VARIANTS.BLUE
+      registrationAlertMessage: constants.ALERT_MESSAGES.REGISTER_WAIT,
+      registrationAlertVariant: constants.COLOR_VARIANTS.BLUE
     };
   },
   methods: {
@@ -134,17 +132,17 @@ export default {
     handleWaitAlertState() {
       this.registrationInSubmission = true;
       this.showRegisterAlert = true;
-      this.registrationAlertVariant = CONSTANTS.COLOR_VARIANTS.BLUE;
-      this.registrationAlertMessage = CONSTANTS.ALERT_MESSAGES.REGISTER_WAIT;
+      this.registrationAlertVariant = constants.COLOR_VARIANTS.BLUE;
+      this.registrationAlertMessage = constants.ALERT_MESSAGES.REGISTER_WAIT;
     },
     handleErrorAlertState() {
       this.registrationInSubmission = false;
-      this.registrationAlertVariant = CONSTANTS.COLOR_VARIANTS.RED;
-      this.registrationAlertMessage = CONSTANTS.ALERT_MESSAGES.ERROR;
+      this.registrationAlertVariant = constants.COLOR_VARIANTS.RED;
+      this.registrationAlertMessage = constants.ALERT_MESSAGES.ERROR;
     },
     handleSuccessAlertState() {
-      this.registrationAlertVariant = CONSTANTS.COLOR_VARIANTS.GREEN;
-      this.registrationAlertMessage = CONSTANTS.ALERT_MESSAGES.REGISTER_SUCCESS;
+      this.registrationAlertVariant = constants.COLOR_VARIANTS.GREEN;
+      this.registrationAlertMessage = constants.ALERT_MESSAGES.REGISTER_SUCCESS;
     }
   }
 };  

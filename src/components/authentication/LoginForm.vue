@@ -1,8 +1,5 @@
 <template>
-    <authentication-alert v-if="showLoginAlert" 
-      :message="loginAlertMessage" 
-      :variant="loginAlertVariant" />
-
+    <page-alert v-if="showLoginAlert" :message="loginAlertMessage" :variant="loginAlertVariant" />
     <vee-form :validation-schema="loginSchema" @submit="login">
         <!-- Email -->
         <div class="mb-3">
@@ -35,13 +32,13 @@
 import { mapActions } from 'pinia';
 import useUserStore from '@/store/user';
 
-import CONSTANTS from '@/constants/constants';
-import AuthenticationAlert from './AuthenticationAlert.vue';
+import constants from '@/constants/constants';
+import PageAlert from '@/components/alert/PageAlert.vue';
 
 export default {
   name: 'LoginForm',
   components: {
-    AuthenticationAlert
+    PageAlert
   },
   data() {
     return {
@@ -51,8 +48,8 @@ export default {
       },
       loginInSubmission: false,
       showLoginAlert: false,
-      loginAlertMessage: CONSTANTS.ALERT_MESSAGES.LOGIN_WAIT,
-      loginAlertVariant: CONSTANTS.COLOR_VARIANTS.BLUE
+      loginAlertMessage: constants.ALERT_MESSAGES.LOGIN_WAIT,
+      loginAlertVariant: constants.COLOR_VARIANTS.BLUE
     };
   },
   methods: {
@@ -63,19 +60,19 @@ export default {
       this.loginInSubmission = true;
       this.showLoginAlert = true;
 
-      this.loginAlertVariant = CONSTANTS.COLOR_VARIANTS.BLUE;
-      this.loginAlertMessage = CONSTANTS.ALERT_MESSAGES.LOGIN_WAIT;
+      this.loginAlertVariant = constants.COLOR_VARIANTS.BLUE;
+      this.loginAlertMessage = constants.ALERT_MESSAGES.LOGIN_WAIT;
 
       try {
         await this.authenticate(values);
       } catch (error) {
-        this.loginAlertVariant = CONSTANTS.COLOR_VARIANTS.RED;
-        this.loginAlertMessage = CONSTANTS.ALERT_MESSAGES.LOGIN_ERROR;
+        this.loginAlertVariant = constants.COLOR_VARIANTS.RED;
+        this.loginAlertMessage = constants.ALERT_MESSAGES.LOGIN_ERROR;
         return;
       }
 
-      this.loginAlertVariant = CONSTANTS.COLOR_VARIANTS.GREEN;
-      this.loginAlertMessage = CONSTANTS.ALERT_MESSAGES.LOGIN_SUCCESS;
+      this.loginAlertVariant = constants.COLOR_VARIANTS.GREEN;
+      this.loginAlertMessage = constants.ALERT_MESSAGES.LOGIN_SUCCESS;
 
       window.location.reload();
     }

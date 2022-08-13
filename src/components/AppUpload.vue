@@ -43,6 +43,12 @@ import { storage, auth, songsCollection } from '@/includes/firebase/firebase';
 
 export default {
   name: 'AppUpload',
+  props: {
+    addSong: {
+      type: Function,
+      required: true
+    }
+  },
   data() {
     return {
       isDragOver: false,
@@ -68,8 +74,8 @@ export default {
         }
 
         // This will create a relative reference.
-        const songsReference = storageReference.child(`songs/${file.name}`); // additional reference
-        const task = songsReference.put(file); 
+        const songReference = storageReference.child(`songs/${file.name}`); // additional reference
+        const task = songReference.put(file); 
 
         const uploadIndex = this.uploads.push({
           task,
@@ -102,7 +108,9 @@ export default {
             };
 
             song.url = await task.snapshot.ref.getDownloadURL();
-            await songsCollection.add(song);
+            const newSongReference = await songsCollection.add(song);
+            const newSongSnapshot = await newSongReference.get();
+            this.addSong(newSongSnapshot);
 
             this.uploads[uploadIndex].variance = 'bg-green-400';
             this.uploads[uploadIndex].icon = 'fas fa-check';
