@@ -6,7 +6,8 @@
     </div>
     <div class="container mx-auto flex items-center">
       <!-- Play/Pause Button -->
-      <button type="button" class="z-50 h-24 w-24 text-3xl bg-white text-black rounded-full
+      <button @click.prevent="playSong(song)"
+        type="button" class="z-50 h-24 w-24 text-3xl bg-white text-black rounded-full
         focus:outline-none">
         <i class="fas fa-play"></i>
       </button>
@@ -64,8 +65,9 @@
 
 <script>
 import { songsCollection, commentsCollection, auth } from '@/includes/firebase/firebase';
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import useUserStore from '@/store/user';
+import usePlayerStore from '@/store/player';
 import constants from '@/constants/constants';
 import PageAlert from '@/components/alert/PageAlert.vue';
 
@@ -100,6 +102,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(usePlayerStore, ['playSong']),
     async addComment(values, { resetForm }) {
       this.commentInSubmission = true;
       this.showCommentAlert = true;
