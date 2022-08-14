@@ -48,15 +48,61 @@ export default {
   },
   data() {
     return {
-      songs: []
+      songs: [],
+      maxNumberOfSongsPerPage: 25,
+      pendingRequest: false
     };
   },
+  methods: {
+    handleScroll() {
+      const { scrollTop, offsetHeight } = document.documentElement;
+      const { innerHeight } = window;
+      const isAtBottomWindow = Math.round(scrollTop) + innerHeight === offsetHeight;
+
+      if (isAtBottomWindow) {
+        this.getSongs();
+      }
+    },
+    async getSongs() {
+      if (this.pendingRequest) {
+        return;
+      }
+
+      this.pendingRequest = true;
+      let snapshots;
+
+      if (this.songs.length) {
+        const lastDocument = await songsCollection
+          .doc(this.songs[this.songs.length - 1].documentId)
+          .get();
+      
+        snapshots = await songsCollection
+          .orderBy('modifiedName')
+          .startAfter(lastDocument)
+          .limit(this.maxNumberOfSongsPerPage)
+          .get();
+      } else {
+        snapshots = await songsCollection
+          .orderBy('modifiedName')
+          .limit(this.maxNumberOfSongsPerPage)
+          .get();
+      }
+
+      snapshots.forEach((songDocument) => this.songs.push({
+        documentId: songDocument.id,
+        ...songDocument.data()
+      }));
+
+      this.pendingRequest = false;
+    },
+  },
   async created() {
-    const snapshots = await songsCollection.get();
-    snapshots.forEach((songDocument) => this.songs.push({
-      documentId: songDocument.id,
-      ...songDocument.data()
-    }));
+    this.getSongs();
+
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 };
 </script>
