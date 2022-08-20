@@ -1,7 +1,11 @@
 <template>
   <app-header />
-  
-  <router-view />
+
+  <router-view v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
+      <component :is="Component"></component>
+    </transition>
+  </router-view>
 
   <music-player v-if="currentSong.modifiedName" />
 
@@ -16,13 +20,15 @@ import usePlayerStore from '@/store/player';
 import AppHeader from '@/components/AppHeader.vue';
 import AuthenticationModal from '@/components/authentication/AuthenticationModal.vue';
 import MusicPlayer from './components/MusicPlayer.vue';
+import AboutView from './views/AboutView.vue';
 
 export default {
   name: 'App',
   components: {
     AppHeader,
     AuthenticationModal,
-    MusicPlayer
+    MusicPlayer,
+    AboutView
   },
   computed: {
     ...mapWritableState(useUserStore, ['userLoggedIn']),
@@ -35,3 +41,16 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: all 0.3s linear;
+}
+.fade-leave-to {
+  transition: all 0.3s linear;
+  opacity: 0;
+}
+</style>
