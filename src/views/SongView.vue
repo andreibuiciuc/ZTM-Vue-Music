@@ -6,10 +6,10 @@
     </div>
     <div class="container mx-auto flex items-center">
       <!-- Play/Pause Button -->
-      <button @click.prevent="playSong(song)"
+      <button @click.prevent="manageSong"
         type="button" class="z-50 h-24 w-24 text-3xl bg-white text-black rounded-full
         focus:outline-none">
-        <i class="fas fa-play"></i>
+        <i class="fas" :class="{ 'fa-play': !isSongPlaying, 'fa-duotone fa-backward': isSongPlaying }"></i>
       </button>
       <div class="z-50 text-left ml-8">
         <!-- Song Info -->
@@ -92,6 +92,7 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ['userLoggedIn']),
+    ...mapState(usePlayerStore, ['currentSong', 'isSongPlaying']),
     sortedComments() {
       return this.comments.slice().sort((a, b) => {
         if (this.sortOption === '1') {
@@ -102,7 +103,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(usePlayerStore, ['playSong']),
+    ...mapActions(usePlayerStore, ['playSong', 'toggleAudio']),
     async addComment(values, { resetForm }) {
       this.commentInSubmission = true;
       this.showCommentAlert = true;
@@ -143,6 +144,13 @@ export default {
           ...commentDocument.data()
         });
       });
+    },
+    manageSong() {
+      if (this.isSongPlaying) {
+        this.toggleAudio();
+      } else {
+        this.playSong(this.song);
+      }
     }
   },
   async created() {
