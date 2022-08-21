@@ -1,0 +1,21 @@
+{
+  "home": {
+    "main-header": "One place for all music",
+    "main-subheader": "Everybody can be an artist",
+    "songs-title": "Songs"
+  },
+  "manage": {
+    "upload": {
+      "upload-header": "Upload",
+      "upload-area": "Drop your files here"
+    },
+    "my-songs-header": "My songs"
+  },
+  "song": {
+    "comments-count": "No comments | Comment | Comments ({count})"
+  },
+  "register": {
+    "accept-tos": "I accept the {0}",
+    "tos": "Terms of Service"
+  }
+}

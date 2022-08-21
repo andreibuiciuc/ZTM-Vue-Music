@@ -1,0 +1,17 @@
+{
+  "home": {
+    "main-header": "Un loc pentru muzica",
+    "main-subheader": "Oricine poate fi un artist",
+    "songs-title": "Melodii"
+  }, 
+  "manage": {
+    "upload": {
+      "upload-header": "Incarca",
+      "upload-area": "Plaseaza aici fisierele tale"
+    },
+    "my-songs-header": "Piesele mele"
+  },
+  "song": {
+    "comments-count": "Niciun comentariu | Un comentariu | Comentarii ({count})"
+  }
+}

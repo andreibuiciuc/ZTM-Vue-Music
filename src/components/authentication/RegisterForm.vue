@@ -67,7 +67,9 @@
         <div class="mb-3 pl-6">
             <vee-field type="checkbox" name="termsOfService" 
             class="w-4 h-4 float-left -ml-6 mt-1 rounded" value="1" />
-            <label class="inline-block">Accept terms of service</label>
+            <i18n-t class="inline-block" keypath="register.accept-tos" tag="label">
+              <a href>{{ $t("register.tos") }}</a>
+            </i18n-t>
             <error-message class="text-red-600 block" name="termsOfService" />
         </div>
 
